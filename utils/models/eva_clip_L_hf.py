@@ -675,11 +675,11 @@ class LayerNorm(nn.LayerNorm):
         x = F.layer_norm(x, self.normalized_shape, self.weight, self.bias, self.eps)
         return x.to(orig_type)
 
-try:
-    from apex.normalization import FusedLayerNorm
-except:
-    FusedLayerNorm = LayerNorm
-    print("Please build and install Nvidia apex package with option '--cuda_ext' according to https://github.com/NVIDIA/apex#from-source .")
+# try:
+#     from apex.normalization import FusedLayerNorm
+# except:
+#     FusedLayerNorm = LayerNorm
+#     print("Please build and install Nvidia apex package with option '--cuda_ext' according to https://github.com/NVIDIA/apex#from-source .")
 
 
 @dataclass
