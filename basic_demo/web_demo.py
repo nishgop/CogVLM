@@ -127,7 +127,7 @@ def post(
                     history=result_text, 
                     cross_img_processor=cross_image_processor,
                     image=pil_img, 
-                    max_length=2048, 
+                    max_length=4096, 
                     top_p=top_p, 
                     temperature=temperature,
                     top_k=top_k,
@@ -188,8 +188,8 @@ def main(args):
                     image_prompt = gr.Image(type="filepath", label="Image Prompt", value=None)
 
                 with gr.Row():
-                    temperature = gr.Slider(maximum=1, value=0.8, minimum=0, label='Temperature')
-                    top_p = gr.Slider(maximum=1, value=0.4, minimum=0, label='Top P')
+                    temperature = gr.Slider(maximum=1, value=0.1, minimum=0, label='Temperature')
+                    top_p = gr.Slider(maximum=1, value=0.1, minimum=0, label='Top P')
                     top_k = gr.Slider(maximum=100, value=10, minimum=1, step=1, label='Top K')
 
             with gr.Column(scale=5):
@@ -217,9 +217,9 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--max_length", type=int, default=4096, help='max length of the total sequence')
-    parser.add_argument("--top_p", type=float, default=0.4, help='top p for nucleus sampling')
+    parser.add_argument("--top_p", type=float, default=0.1, help='top p for nucleus sampling')
     parser.add_argument("--top_k", type=int, default=1, help='top k for top k sampling')
-    parser.add_argument("--temperature", type=float, default=.8, help='temperature for sampling')
+    parser.add_argument("--temperature", type=float, default=.1, help='temperature for sampling')
     parser.add_argument("--version", type=str, default="chat", choices=['chat', 'vqa', 'chat_old', 'base'], help='version of language process. if there is \"text_processor_version\" in model_config.json, this option will be overwritten')
     parser.add_argument("--quant", choices=[8, 4], type=int, default=None, help='quantization bits')
     parser.add_argument("--from_pretrained", type=str, default="cogagent-chat", help='pretrained ckpt')
