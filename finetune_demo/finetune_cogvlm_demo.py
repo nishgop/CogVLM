@@ -220,7 +220,7 @@ def forward_step(data_iterator, model, args, timers):
     loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
     loss = loss.to(torch.float32)
 
-    return loss, {'loss': loss, 'accuracy': accuracy}
+    return loss, {'loss': loss.item(), 'accuracy': accuracy.item()}
 
 from utils.utils import ItemDataset
 def create_dataset_function(image_processor, text_processor, path, args):
