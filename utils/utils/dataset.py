@@ -3,6 +3,7 @@ import logging
 import random
 import logging
 import jsonlines
+import json
 from io import BytesIO
 from PIL import Image
 from torch.utils.data import Dataset
