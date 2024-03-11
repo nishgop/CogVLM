@@ -85,6 +85,6 @@ class ItemDataset(Dataset):
         except Exception as e:
             print(f"Failed to process text for {label_path}: {e}")
             return {}
-        uni_key = os.path.basename(img_path).split('.')[0]
+        uni_key = os.path.basename(data).split('.')[0]
         ret = {**img_dict, **text_dict, "question_id": uni_key}
         return ret
