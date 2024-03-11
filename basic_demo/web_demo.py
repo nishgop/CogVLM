@@ -124,7 +124,7 @@ def post(
                     text_processor=text_processor_infer,
                     img_processor=image_processor,
                     query=input_text, 
-                    history=result_text, 
+                    history=None, 
                     cross_img_processor=cross_image_processor,
                     image=pil_img, 
                     max_length=4096, 
@@ -149,8 +149,7 @@ def post(
         result_text.append((None, (image_path_grounding,)))
     else:
         result_text.append((input_text, answer))
-    print(result_text)
-    print(f"result_text {result_text}")   
+        print(f"result_text {result_text}")   
     print('finished')
     return "", result_text, hidden_image
 
