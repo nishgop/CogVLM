@@ -141,6 +141,7 @@ def post(
         return "", result_text, hidden_image
 
     answer = response
+    print(f"reponse {response}")        
     if is_grounding:
         parse_response(pil_img, answer, image_path_grounding)
         new_answer = answer.replace(input_text, "")
@@ -149,6 +150,7 @@ def post(
     else:
         result_text.append((input_text, answer))
     print(result_text)
+    print(f"result_text {result_text}")   
     print('finished')
     return "", result_text, hidden_image
 
