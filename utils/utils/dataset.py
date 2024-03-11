@@ -75,11 +75,8 @@ class ItemDataset(Dataset):
         try:
             with open(label_path, 'r') as f:
                 label_data = json.load(f)
-            # Here you extract the relevant details from your JSON
-            # Assuming your JSON structure is as shown before
             question = label_data.get("Question", "Default Question")
-            answer = label_data.get("Answer", {})
-            
+            answer = label_data.get("Answer", {}) 
             # Formatting the answer as a text string
             answer_text = ", ".join(f"{key}: {value}" for key, value in answer.items())
             
