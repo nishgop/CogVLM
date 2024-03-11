@@ -14,10 +14,10 @@ from utils.models import CogAgentModel, CogVLMModel
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--max_length", type=int, default=2048, help='max length of the total sequence')
-    parser.add_argument("--top_p", type=float, default=0.4, help='top p for nucleus sampling')
+    parser.add_argument("--max_length", type=int, default=4096, help='max length of the total sequence')
+    parser.add_argument("--top_p", type=float, default=0.1, help='top p for nucleus sampling')
     parser.add_argument("--top_k", type=int, default=1, help='top k for top k sampling')
-    parser.add_argument("--temperature", type=float, default=.8, help='temperature for sampling')
+    parser.add_argument("--temperature", type=float, default=.1, help='temperature for sampling')
     parser.add_argument("--chinese", action='store_true', help='Chinese interface')
     parser.add_argument("--version", type=str, default="chat", choices=['chat', 'vqa', 'chat_old', 'base'], help='version of language process. if there is \"text_processor_version\" in model_config.json, this option will be overwritten')
     parser.add_argument("--quant", choices=[8, 4], type=int, default=None, help='quantization bits')
