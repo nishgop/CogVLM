@@ -92,7 +92,7 @@ while True:
             inputs['cross_images'] = [[input_by_model['cross_images'][0].to(DEVICE).to(torch_type)]]
 
         # add any transformers params here.
-        gen_kwargs = {"max_length": 2048,
+        gen_kwargs = {"max_length": 4096,
                       "do_sample": False} # "temperature": 0.9
         with torch.no_grad():
             outputs = model.generate(**inputs, **gen_kwargs)
