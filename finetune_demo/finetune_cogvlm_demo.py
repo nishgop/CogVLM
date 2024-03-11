@@ -11,6 +11,13 @@ from sat.helpers import print_rank0
 from utils.models import FineTuneTrainCogVLMModel
 from utils.utils import llama2_text_processor, llama2_text_processor_inference, get_image_processor
 
+def calculate_accuracy(logits, labels):
+    # Convert logits to predictions
+    preds = torch.argmax(logits, dim=-1)
+    correct_preds = torch.eq(preds, labels).float()
+    accuracy = correct_preds.sum() / labels.size(0)
+    return accuracy.item()  
+
 def disable_untrainable_params(self):
     total_trainable = 0
     enable = [('mlp', 'vit')]
@@ -203,6 +210,7 @@ def forward_step(data_iterator, model, args, timers):
     labels = data_b.pop('labels')
     timers('batch generator').stop()
     logits = model(**data_b)[0]
+    accuracy = calculate_accuracy(logits, data_b['labels']) #Added
     lm_logits = logits.to(torch.float32)
     # Shift so that tokens < n predict n
     shift_labels = labels[..., 1:].contiguous()
@@ -212,7 +220,7 @@ def forward_step(data_iterator, model, args, timers):
     loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
     loss = loss.to(torch.float32)
 
-    return loss, {'loss': loss}
+    return loss, {'loss': loss, 'accuracy': accuracy}
 
 from utils.utils import ItemDataset
 def create_dataset_function(image_processor, text_processor, path, args):
