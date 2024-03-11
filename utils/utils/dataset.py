@@ -54,9 +54,9 @@ class ItemDataset(Dataset):
 
     def __getitem__(self, index):
         # data = self.data[index]
-        img_path, label_path = self.data[index] 
+        data, label_path = self.data[index] 
         # Dynamically construct the label path from the image path
-        label_path = img_path.replace('.jpg', '.json') 
+        label_path = data.replace('.jpg', '.json') 
         # img
         try:
             img = Image.open(data).convert('RGB')
