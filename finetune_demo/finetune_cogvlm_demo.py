@@ -210,7 +210,7 @@ def forward_step(data_iterator, model, args, timers):
     labels = data_b.pop('labels')
     timers('batch generator').stop()
     logits = model(**data_b)[0]
-   accuracy = calculate_accuracy(logits, labels) #Added
+    accuracy = calculate_accuracy(logits, labels) #Added
     lm_logits = logits.to(torch.float32)
     # Shift so that tokens < n predict n
     shift_labels = labels[..., 1:].contiguous()
