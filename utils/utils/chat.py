@@ -35,7 +35,7 @@ def process_image(image_path, img_processor, cross_img_processor, image):
 
 def chat(image_path, model, text_processor, img_processor,
         query: str, history: List[Tuple[str, str]] = None, cross_img_processor=None, image: Image = None,
-        max_length: int = 4096, top_p=0.95, top_k=5, temperature=0.95, repetition_penalty=1.0,
+        max_length: int = 4096, top_p=0.95, top_k=5, temperature=0.01, repetition_penalty=1.0,
         invalid_slices=[], no_prompt=False, args=None
         ):
     if image is None:
@@ -138,7 +138,7 @@ def chat(image_path, model, text_processor, img_processor,
             output_list = output
 
         response = text_processor.tokenizer.decode(output_list[0])
-    # print('original:', response)
+    print('original:', response)
     if hasattr(text_processor, 'process_response'):
         response = text_processor.process_response(response)
     response = response.split(text_processor.sep)[-1].strip()
