@@ -32,16 +32,31 @@ class ItemDataset(Dataset):
     def process_text(self, answer, prompt):
         return self.text_processor(answer, prompt)
     
+    # def load_data(self, data_dir):
+    #     all_files = find_all_files(data_dir, suffix=".jpg")
+    #     print_rank0(f"find {len(all_files)} samples in all...")
+    #     return all_files
     def load_data(self, data_dir):
-        all_files = find_all_files(data_dir, suffix=".jpg")
-        print_rank0(f"find {len(all_files)} samples in all...")
-        return all_files
+        image_files = find_all_files(data_dir, suffix=".jpg")
+        data_pairs = []
+        for img_path in image_files:
+            base_name = os.path.basename(img_path).split('.')[0]
+            label_path = os.path.join(os.path.dirname(img_path), f"{base_name}.json")
+            if os.path.exists(label_path):
+                data_pairs.append((img_path, label_path))
+            else:
+                print_rank0(f"Warning: No label file found for {img_path}")
+        print_rank0(f"Loaded {len(data_pairs)} image-label pairs")
+        return data_pairs
     
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, index):
-        data = self.data[index]
+        # data = self.data[index]
+        img_path, label_path = self.data[index] 
+        # Dynamically construct the label path from the image path
+        label_path = img_path.replace('.jpg', '.json') 
         # img
         try:
             img = Image.open(data).convert('RGB')
@@ -50,12 +65,28 @@ class ItemDataset(Dataset):
             return {}
         img_dict = self.process_img(img)
         # text
-        label = data.split('/')[-1].split('.')[0]
-        uni_key = label
-        text_dict = self.process_text(label, "CAPTCHA:")
-        if text_dict is None:
-            print_rank0(f"Process text failed. Please check the max_target_length & max_source_length.\n The data is {data}", level=logging.WARNING)
+        # label = data.split('/')[-1].split('.')[0]
+        # uni_key = label
+        # text_dict = self.process_text(label, "CAPTCHA:")
+        # if text_dict is None:
+        #     print_rank0(f"Process text failed. Please check the max_target_length & max_source_length.\n The data is {data}", level=logging.WARNING)
+        #     return {}
+        # # other attr
+        try:
+            with open(label_path, 'r') as f:
+                label_data = json.load(f)
+            # Here you extract the relevant details from your JSON
+            # Assuming your JSON structure is as shown before
+            question = label_data.get("Question", "Default Question")
+            answer = label_data.get("Answer", {})
+            
+            # Formatting the answer as a text string
+            answer_text = ", ".join(f"{key}: {value}" for key, value in answer.items())
+            
+            text_dict = self.process_text(answer_text, question)
+        except Exception as e:
+            print(f"Failed to process text for {label_path}: {e}")
             return {}
-        # other attr
+         
         ret = {**img_dict, **text_dict, "question_id": uni_key}
         return ret
