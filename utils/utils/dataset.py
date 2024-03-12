@@ -83,6 +83,7 @@ class ItemDataset(Dataset):
             answer_text = ", ".join(f"{key}: {value}" for key, value in answer.items())
             
             text_dict = self.process_text(answer_text, question_text)
+            print(f"question: {question_text}, answer: {answer_text}")
         except Exception as e:
             print(f"Failed to process text for {label_path}: {e}")
             return {}
