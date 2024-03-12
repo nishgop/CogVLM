@@ -194,7 +194,7 @@ def main(args):
                     top_k = gr.Slider(maximum=100, value=10, minimum=1, step=1, label='Top K')
 
             with gr.Column(scale=5):
-                result_text = gr.components.Chatbot(label='Multi-round conversation History', value=[("", "Hi, What do you want to know about this image?")], height=600)
+                result_text = gr.components.Chatbot(label='Multi-round conversation History', value=[("", "")], height=600)
                 hidden_image_hash = gr.Textbox(visible=False)
 
 
