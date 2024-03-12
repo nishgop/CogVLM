@@ -112,7 +112,7 @@ def post(
         if result_text[i][0] == "" or result_text[i][0] == None:
             del result_text[i]
     print(f"history {result_text}")
-    
+    print(f"input_text: {input_text}")
     global model, image_processor, cross_image_processor, text_processor_infer, is_grounding
 
     try:
