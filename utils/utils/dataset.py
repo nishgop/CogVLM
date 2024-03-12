@@ -76,16 +76,15 @@ class ItemDataset(Dataset):
         try:
             with open(label_path, 'r') as f:
                 label_data = json.load(f)
-            question = label_data.get("Question", {})
-            question_text = ", ".join(f"{key}: {value}" for key, value in question.items())
-            answer = label_data.get("Answer", {}) 
-            # Formatting the answer as a text string
+
+            question = label_data.get("Question", "Default Question") 
+            answer = label_data.get("Answer", {})
             answer_text = ", ".join(f"{key}: {value}" for key, value in answer.items())
-            
-            text_dict = self.process_text(answer_text, question_text)
-            print(f"question: {question_text}, answer: {answer_text}")
+
+            text_dict = self.process_text(answer_text, question)
+            print_rank0(f"Q : {question}, A: {answer_text}")
         except Exception as e:
-            print(f"Failed to process text for {label_path}: {e}")
+            print_rank0(f"Failed to process text for {label_path}: {e}")
             return {}
         uni_key = os.path.basename(data).split('.')[0]
         ret = {**img_dict, **text_dict, "question_id": uni_key}
