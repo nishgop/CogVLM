@@ -44,7 +44,7 @@ GROUNDING_NOTICE = 'Hint 2: To use <strong>Grounding</strong> function, please u
 
 
 
-default_chatbox = [("", "Hi, What do you want to know about this image?")]
+# default_chatbox = [("", "Hi, What do you want to know about this image?")]
 
 
 model = image_processor = text_processor_infer = None
@@ -155,10 +155,12 @@ def post(
 
 
 def clear_fn(value):
-    return "", default_chatbox, None
+    # return "", default_chatbox, None
+    return "", "", None
 
 def clear_fn2(value):
-    return default_chatbox
+    # return default_chatbox
+    return ""
 
 
 def main(args):
