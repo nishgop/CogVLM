@@ -118,7 +118,7 @@ from sat.generation.sampling_strategies import BaseStrategy, BeamSearchStrategy
 
 
 def chat(model, tokenizer, tokens,
-         max_length: int = 1800, num_beams=5, top_p=0.95, top_k=0, temperature=0.8, **kwargs):
+         max_length: int = 4096, num_beams=5, top_p=0.95, top_k=0, temperature=0.8, **kwargs):
     inputs = tokens.to(model.parameters().__next__().device)[0]
     seq = torch.cat(
         [inputs, torch.tensor([-1] * (max_length - len(inputs)), device=inputs.device)], dim=0
