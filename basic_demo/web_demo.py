@@ -180,8 +180,8 @@ def main(args):
         with gr.Row():
             with gr.Column(scale=5):
                 with gr.Group():
-                    gr.Markdown(AGENT_NOTICE)
-                    gr.Markdown(GROUNDING_NOTICE)
+                    # gr.Markdown(AGENT_NOTICE)
+                    # gr.Markdown(GROUNDING_NOTICE)
                     input_text = gr.Textbox(label='Input Text', placeholder='Please enter text prompt below and press ENTER.')
                     
                     with gr.Row():
