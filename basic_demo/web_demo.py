@@ -200,7 +200,7 @@ def main(args):
                 hidden_image_hash = gr.Textbox(visible=False)
 
 
-        gr.Markdown(MAINTENANCE_NOTICE1)
+        # gr.Markdown(MAINTENANCE_NOTICE1)
 
         print(gr.__version__)
         run_button.click(fn=post,inputs=[input_text, temperature, top_p, top_k, image_prompt, result_text, hidden_image_hash, state],
