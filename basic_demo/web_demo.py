@@ -173,8 +173,8 @@ def main(args):
     with gr.Blocks(css='style.css') as demo:
         state = gr.State({'args': args})
 
-        gr.Markdown(DESCRIPTION)
-        gr.Markdown(NOTES)
+        # gr.Markdown(DESCRIPTION)
+        # gr.Markdown(NOTES)
         
 
         with gr.Row():
