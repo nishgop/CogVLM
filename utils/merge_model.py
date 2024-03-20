@@ -35,7 +35,7 @@ def main():
         **vars(args)
     ), url='local', overwrite_args={'model_parallel_size': 1})
     model = model.eval()
-    base_dbfs_path = "/dbfs/FileStore/cogfinetune/checkpointsv11500_2/" # Added Code 20240307
+    base_dbfs_path = "/dbfs/FileStore/cogfinetune/checkpointsv11500_3/" # Added Code 20240307
     model_args.save = os.path.join(base_dbfs_path, 'merged_model_{}'.format(model_args.eva_args["image_size"][0]))
     # model_args.save = './checkpoints/merged_model_{}'.format(model_args.eva_args["image_size"][0])
     save_checkpoint(1, model, None, None, model_args)
